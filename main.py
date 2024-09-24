@@ -2,45 +2,6 @@ import game_controller
 from aesthetics import horizontal_rule, input_to_continue
 from game_loop import game_single_player, game_multiple_players_1v1
 
-'''
-TODO (v1):
-- Player actions:
-	[x] play
-	[x] attack
-- Cards:
-	[x] Chillwind Yeti
-	[x] Bloodfen Raptor
-	[x] Boulderfist Ogre
-	[x] Fireball
-	[x] Polymorph
-- [x] Starter cards (3, 4, ...)
-- [x] Turn based (multiple players)
-- [x] Health point tracking
-- [x] Fatigue damage (empty deck)
-- [x] Overdraw
-- [x] Victory conditions (only one player alive)
-- [x] Max 7 minions on a player's battlefield
-- [x] Max 10 mana crystals
-- [x] Hand logs
-'''
-
-'''
-TODO (v2):
-- Player actions:
-	[ ] hero power
-- Cards:
-	[x] Flamestrike
-	[x] Arcane Intellect
-	[x] Holy Nova
-	[x] Cataclysm
-	[x] Deadly Shot
-	[ ] Stormwind Champion
-	[ ] Booty Bay Bodyguard
-	[ ] Wolfrider
-	[ ] Spymistress
-- [ ] Card / character effects
-'''
-
 # Functions
 
 def main_game():

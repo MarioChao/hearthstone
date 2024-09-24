@@ -19,7 +19,7 @@ class Hand:
 			# Full card detail
 			for card_index in range(len(self.cards)):
 				card = self.cards[card_index]
-				result_str_list.append(f"\t{card_index:2}. {f"[{card}]":20}")
+				result_str_list.append(f"\t{card_index:2}. {f"[{card}]":25}")
 			result_str = "\n".join(result_str_list)
 		else:
 			# Card name + mana cost

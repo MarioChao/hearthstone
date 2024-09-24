@@ -4,13 +4,13 @@ import game_controller
 from player_gameplay import player_actions
 from aesthetics import horizontal_rule, input_to_continue
 from cards.card_storage import spell_cards, minion_cards
-from client.deck import Deck
-from client.player import Player
+from player_client.deck import Deck
+from player_client.player import Player
 
 # Variables
 
 default_deck_cards = list(minion_cards.values()) + list(spell_cards.values())
-default_deck_cards *= 3
+default_deck_cards *= 2
 
 # Helper functions
 
@@ -84,6 +84,9 @@ def general_game_loop(game_players: list[Player]):
 			# Process action
 			action_result = player_actions.process_action(action, game)
 
+			# Resolve death
+			game.resolve_deaths()
+
 			# Break actions
 			if action in ("e", "end", "concede"):
 				break
@@ -94,6 +97,9 @@ def general_game_loop(game_players: list[Player]):
 
 		# End turn
 		game.end_turn()
+
+	# End game
+	game.end_game()
 
 	# Return game
 	return game

@@ -3,10 +3,10 @@ from typing import TYPE_CHECKING
 from cards.card_base import Card
 from cards.card_minion import MinionCard
 from cards.card_spell import SpellCard
-from client.battlefield import Battlefield
+from player_client.battlefield import Battlefield
 from character.character_class import Character
-from client.deck import Deck
-from client.hand import Hand
+from player_client.deck import Deck
+from player_client.hand import Hand
 
 if TYPE_CHECKING:
 	from game_controller import GameController
@@ -105,6 +105,7 @@ class Player:
 		print(f"Discarded card: [{card.name}]")
 
 		# TODO: Discard effect
+		pass
 
 	def remove_card(self, card: Card):
 		# Remove a card object from player's hand
@@ -130,7 +131,8 @@ class Player:
 
 		# Save logs
 		self.game.save_log(
-			f"<{self.name}>"
+			f"(PLAY)"
+			f" <{self.name}>"
 			f" played [{card.name}] minion"
 			f" at battlefield position {position}."
 		)
@@ -166,7 +168,8 @@ class Player:
 
 		# Save logs
 		self.game.save_log(
-			f"<{self.name}>"
+			f"(PLAY)"
+			f" <{self.name}>"
 			f" played [{card.name}] spell."
 		)
 

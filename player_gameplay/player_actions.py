@@ -10,15 +10,19 @@ from target.query_target import QueryTarget, TargetAlliance, TargetCharacterType
 
 action_list = [
 	"h",
-	"field+",
-	"hand", "hand+",
-	"play", "attack", "hero power",
+	"field", "fd",
+	"hand", "hd",
+	"play",
+	"attack", "atk",
+	"hero power",
 	"e", "end", "concede",
 ]
 
 attack_query_target = QueryTarget(
 	TargetAlliance.enemy, TargetCharacterType.any_character,
-	(1, 1), TargetChooseMethod.user_input
+	(1, 1), TargetChooseMethod.user_input,
+	respect_taunt=True,
+	respect_stealth=True
 )
 
 # Functions
@@ -34,16 +38,16 @@ def process_action(action: str, game: GameController):
 			print("Actions:")
 			print(f"\t{action_list}")
 			return True
-		case "field":
+		case "field never":
 			game.display_battlefields(False)
 			return True
-		case "field+":
+		case "field" | "fd":
 			game.display_battlefields(True)
 			return True
-		case "hand":
+		case "hand never" :
 			game.turn_display_hand(False)
 			return True
-		case "hand+":
+		case "hand" | "hd":
 			game.turn_display_hand(True)
 			return True
 		case "play":
@@ -71,7 +75,7 @@ def process_action(action: str, game: GameController):
 			# Play card
 			if isinstance(card, MinionCard):
 				# Display player battlefield
-				player.display_battlefield()
+				player.display_battlefield(True)
 
 				# Input position to play minion
 				position = input_empty_battlefield_position(player)
@@ -86,7 +90,6 @@ def process_action(action: str, game: GameController):
 				# Print success
 				if success:
 					print(f"Played [{card.name}] minion at battlefield position {position}.")
-					player.display_battlefield()
 
 			elif isinstance(card, SpellCard):
 				# Play card
@@ -97,12 +100,12 @@ def process_action(action: str, game: GameController):
 					print(f"Played [{card.name}] spell.")
 
 			return True
-		case "attack":
+		case "attack" | "atk":
 			# Get player
 			player = game.turn_get_player()
 
 			# Display player battlefield
-			player.display_battlefield()
+			player.display_battlefield(True)
 
 			# Input player's minion to attack
 			minion_position = input_minion_battlefield_position(player)

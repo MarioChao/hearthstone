@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from character.character_class import CharacterType
-from client.player import Player
+from player_client.player import Player
 from target.query_target import QueryTarget, TargetAlliance
 
 if TYPE_CHECKING:
@@ -124,7 +124,7 @@ def input_any_minion(query_target: QueryTarget, game: "GameController"):
 
 	# Input player minion
 	player = game.players[player_index]
-	player.display_battlefield()
+	player.display_battlefield(True)
 	minion_index = input_minion_battlefield_position(player)
 	if minion_index == -1:
 		return

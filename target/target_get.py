@@ -1,6 +1,7 @@
 import random
 from typing import TYPE_CHECKING
 
+from character.character_class import Character
 from target.query_target import QueryTarget, TargetsType, TargetCharacterType, TargetChooseMethod
 from player_gameplay.player_input import input_character_type, input_any_minion, input_hero
 
@@ -10,7 +11,11 @@ if TYPE_CHECKING:
 # Functions
 
 # Get all selectable targets
-def get_available_targets(query_target: QueryTarget, game: "GameController") -> TargetsType:
+def get_available_targets(
+		query_target: QueryTarget,
+		game: "GameController",
+		pov_character: Character = None,
+) -> TargetsType:
 	# Find all targets in the game
 	raw_targets = []
 	for player in game.players:
@@ -18,13 +23,16 @@ def get_available_targets(query_target: QueryTarget, game: "GameController") -> 
 		for character in player.battlefield.characters:
 			raw_targets.append(character)
 
+	# Get source character for querying
+	if not pov_character:
+		pov_character = game.turn_get_player().hero
+
 	# Filter valid targets
 	available_targets = []
-	player = game.turn_get_player()
 	for target in raw_targets:
 		# Check validity
 		try:
-			query_target.check_character_valid(player, target)
+			query_target.check_character_valid(pov_character, target)
 		except Exception:
 			continue
 
@@ -86,7 +94,7 @@ def get_targets_user_input(query_target: QueryTarget, game: "GameController") ->
 
 		# Validate target
 		try:
-			query_target.check_character_valid(game.turn_get_player(), target_character)
+			query_target.check_character_valid(game.turn_get_player().hero, target_character)
 		except Exception as e:
 			print(f"Error: {e}")
 			continue

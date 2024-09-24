@@ -1,7 +1,11 @@
 from cards.card_minion import MinionCard
 from cards.card_spell import SpellCard
-from spells.spell_effects import create_damage_effect, create_morph_effect, create_draw_card_effect, \
-	create_healing_effect, create_destroy_effect, create_discard_card_effect
+from character.character_effect_examples import create_taunt_ability, create_charge_ability, create_stealth_ability
+from character.character_effects import CharacterAbility
+from character.character_effect_types import CharacterEffectType
+from effects.effect_functions import create_damage_effect, create_stat_edit_effect, create_draw_card_effect, \
+	create_healing_effect, create_destroy_effect, create_discard_card_effect, create_dummy_effect, \
+	create_combined_effects, create_change_attack_effect, create_change_max_health_effect, create_transform_effect
 from target.query_target import QueryTarget, TargetAlliance, TargetCharacterType, TargetChooseMethod
 from spells.spell_module import Spell
 
@@ -12,29 +16,77 @@ minion_cards = {
 		"Chillwind Yeti", 4,
 		"A classic yeti minion with solid stats.",
 		4, 5,
-		set()
+		[]
 	),
 	"Bloodfen Raptor": MinionCard(
 		"Bloodfen Raptor", 2,
 		"A powerful ogre minion with high attack and health.",
 		3, 2,
-		set()
+		[]
 	),
 	"Boulderfist Ogre": MinionCard(
 		"Boulderfist Ogre", 6,
 		"A simple raptor minion with good stats for its cost.",
 		6, 7,
-		set()
+		[]
+	),
+	"Sheep": MinionCard(
+		"Sheep", 1,
+		"",
+		1, 1,
+		[]
+	),
+	# Core set is 7/7, while Classic is 6/6
+	"Stormwind Champion": MinionCard(
+		"Stormwind Champion", 7,
+		"Your other minions have +1/+1.",
+		7, 7,
+		[
+			CharacterAbility(
+				CharacterEffectType.aura,
+				create_combined_effects([
+					create_change_attack_effect(1),
+					create_change_max_health_effect(1)
+				]),
+				create_combined_effects([
+					create_change_attack_effect(-1),
+					create_change_max_health_effect(-1)
+				]),
+				QueryTarget(
+					TargetAlliance.friendly, TargetCharacterType.minions,
+					(-1, -1), TargetChooseMethod.all,
+					exclude_self=True
+				)
+			),
+		]
+	),
+	"Booty Bay Bodyguard": MinionCard(
+		"Booty Bay Bodyguard", 5,
+		"Taunt",
+		6, 6,
+		[
+			create_taunt_ability()
+		]
+	),
+	"Wolfrider": MinionCard(
+		"Wolfrider", 3,
+		"Charge",
+		3, 1,
+		[
+			create_charge_ability()
+		]
+	),
+	"Spymistress": MinionCard(
+		"Spymistress", 1,
+		"Stealth",
+		3, 1,
+		[
+			create_stealth_ability()
+		]
 	),
 }
 
 upcoming_minion_cards = {
-	"Stormwind Champion": MinionCard(
-		"Stormwind Champion", 7,
-		"Your other minions have +1/+1.",
-		6, 6,
-		set()
-	),
 }
 
 spell_cards = {
@@ -58,12 +110,7 @@ spell_cards = {
 		[
 			Spell(
 				"Transform a minion into a 1/1 Sheep.",
-				create_morph_effect({
-					"name": "Sheep",
-					"attack": 1,
-					"max_health": 1,
-					"health": 1,
-				}),
+				create_transform_effect(minion_cards["Sheep"]),
 				QueryTarget(
 					TargetAlliance.all, TargetCharacterType.minions,
 					(1, 1), TargetChooseMethod.user_input
@@ -80,7 +127,8 @@ spell_cards = {
 				create_damage_effect(5),
 				QueryTarget(
 					TargetAlliance.enemy, TargetCharacterType.minions,
-					(-1, -1), TargetChooseMethod.all
+					(-1, -1), TargetChooseMethod.all,
+					respect_stealth=False
 				),
 			)
 		]
@@ -108,7 +156,8 @@ spell_cards = {
 				create_damage_effect(2),
 				QueryTarget(
 					TargetAlliance.enemy, TargetCharacterType.minions,
-					(-1, -1), TargetChooseMethod.all
+					(-1, -1), TargetChooseMethod.all,
+					respect_stealth=False
 				)
 			),
 			Spell(
@@ -130,7 +179,8 @@ spell_cards = {
 				create_destroy_effect(),
 				QueryTarget(
 					TargetAlliance.all, TargetCharacterType.minions,
-					(-1, -1), TargetChooseMethod.all
+					(-1, -1), TargetChooseMethod.all,
+					respect_stealth=False
 				)
 			),
 			Spell(
@@ -152,7 +202,8 @@ spell_cards = {
 				create_destroy_effect(),
 				QueryTarget(
 					TargetAlliance.enemy, TargetCharacterType.minions,
-					(1, 1), TargetChooseMethod.random
+					(1, 1), TargetChooseMethod.random,
+					respect_stealth=False
 				)
 			)
 		]

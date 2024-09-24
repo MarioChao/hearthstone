@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from target.query_target import TargetsType, QueryTarget
-from spells.spell_effects import SpellEffect
+from effects.effect_functions import EffectFunction
 from target.target_get import get_targets_input
 
 if TYPE_CHECKING:
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 # Class
 
 class Spell:
-	def __init__(self, description: str, spell_effect: SpellEffect, query_target: QueryTarget):
+	def __init__(self, description: str, spell_effect: EffectFunction, query_target: QueryTarget):
 		self.description = description
 		self.spell_effect = spell_effect
 		self.query_target = query_target

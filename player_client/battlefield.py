@@ -4,7 +4,7 @@ from character.character_class import Character, CharacterType
 
 if TYPE_CHECKING:
 	from cards.card_minion import MinionCard
-	from client.player import Player
+	from player_client.player import Player
 
 # Battlefield class
 
@@ -28,6 +28,15 @@ class Battlefield:
 
 		# Play minion card
 		self.characters[position].set_as_minion(minion)
+
+	def has_taunt(self):
+		# Check if any character has "taunt" effect
+		for character in self.characters:
+			if character.has_active_taunt():
+				return True
+		return False
+
+	# Display
 
 	def get_display(self, is_detailed=False):
 		# Get list of character names

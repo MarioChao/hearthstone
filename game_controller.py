@@ -1,11 +1,12 @@
 import random
 
 from aesthetics import horizontal_rule
+from aura import Aura
 from cards.card_minion import MinionCard
 from cards.card_spell import SpellCard
 from cards.card_storage import minion_cards, spell_cards
-from character.character_class import Character
-from client.player import Player
+from character.character_class import Character, CharacterType
+from player_client.player import Player
 
 # Functions
 
@@ -14,11 +15,11 @@ def display_cards():
 
 	print(f"Minion cards ({len(minion_cards)}):")
 	for card_name, card in minion_cards.items():
-		print(f"\t{f"[{card_name}]":20} {card}")
+		print(f"\t{f"[{card_name}]":25} {card}")
 
 	print(f"Spell cards ({len(spell_cards)}):")
 	for card_name, card in spell_cards.items():
-		print(f"\t{f"[{card_name}]":20} {card}")
+		print(f"\t{f"[{card_name}]":25} {card}")
 
 def attacker_can_attack(attacker: Character):
 	return attacker.moves_left > 0 and attacker.health > 0
@@ -34,6 +35,7 @@ class GameController:
 		self.players = players
 		self.round_number = 0
 		self.player_turn = 0
+		self.aura = Aura()
 		self.game_logs: list[str] = []
 
 	# General functions
@@ -100,14 +102,32 @@ class GameController:
 		self.round_number = 0
 		self.__next_round()
 
+	# Resolve states
+
+	def resolve_deaths(self):
+		for player in self.players:
+			for character in player.battlefield.characters:
+				if character.character_type != CharacterType.none and character.health <= 0:
+					character.on_destruction()
+
 	# Turn / round functions
 
 	def start_turn(self):
 		player = self.turn_get_player()
+
+		# Reset mana
 		self.__reset_mana(player)
+
+		# Reset all character moves / remove all exhaustion
+		for player in self.players:
+			if player.get_health() > 0:
+				reset_minion_moves(player)
 
 	def turn_get_player(self):
 		return self.players[self.player_turn]
+
+	def get_timestamp(self):
+		return f"Round {self.round_number}, Turn {self.player_turn}"
 
 	# Turn display
 
@@ -198,7 +218,8 @@ class GameController:
 
 		# Save logs
 		self.save_log(
-			f"<{attacker.commander.name}>'s"
+			f"(ATTACK)"
+			f" <{attacker.commander.name}>'s"
 			f" character [{attacker.name}]"
 			f" attacked <{target.commander.name}>'s"
 			f" character [{target.name}]."
@@ -208,6 +229,9 @@ class GameController:
 		target.receive_damage(attacker.get_attack())
 		attacker.receive_damage(target.get_attack())
 
+		# On attack event
+		attacker.on_attack()
+
 		# Reduce moves
 		attacker.moves_left -= 1
 
@@ -216,7 +240,6 @@ class GameController:
 	def end_turn(self):
 		# Reset minion moves
 		player = self.turn_get_player()
-		reset_minion_moves(player)
 
 		# Save logs
 		self.save_log(f"Ended turn for <{player.name}>.")
@@ -280,7 +303,21 @@ class GameController:
 				return player.name
 		return None
 
+	def end_game(self):
+		if not self.is_game_ended():
+			return
+
+		# Save logs
+		winner = self.get_winner()
+		winner_str = ""
+		if winner:
+			winner_str = f"<{winner}> wins!"
+		else:
+			winner_str = f"It's a tie."
+		self.save_log(f"Game ended! {winner_str}")
+
 	# Log functions
 
 	def save_log(self, log: str):
-		self.game_logs.append(log)
+		timestamp = self.get_timestamp()
+		self.game_logs.append(f"[{timestamp}]: {log}")
