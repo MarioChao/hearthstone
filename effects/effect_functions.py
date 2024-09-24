@@ -1,3 +1,5 @@
+"""Contains common effect functions for spells and character effects"""
+
 import random
 import typing
 from typing import TYPE_CHECKING

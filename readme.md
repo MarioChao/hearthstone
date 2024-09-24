@@ -20,7 +20,7 @@ A hearthstone simulation created as a starter Python project.
 - [x] Health point tracking
 - [x] Fatigue damage (empty deck)
 - [x] Overdraw
-- [x] Victory conditions (only one player alive)
+- [x] Victory conditions (<= one player alive)
 - [x] Max 7 minions on a player's battlefield
 - [x] Max 10 mana crystals
 - [x] Hand / game logs
@@ -33,6 +33,7 @@ A hearthstone simulation created as a starter Python project.
   - [x] Holy Nova
   - [x] Cataclysm
   - [x] Deadly Shot
+  - [x] Sheep
   - [x] Stormwind Champion
   - [x] Booty Bay Bodyguard
   - [x] Wolfrider
@@ -41,6 +42,7 @@ A hearthstone simulation created as a starter Python project.
 - [x] Aura effects
 - [x] Timestamps in game logs
 - [x] Visual improvement
+- [x] Module docstrings
 
 ### Unimplemented Features
 

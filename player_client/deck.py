@@ -1,3 +1,5 @@
+"""Handles a player's card deck"""
+
 import random
 from copy import deepcopy
 

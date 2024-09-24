@@ -1,3 +1,5 @@
+"""Handles a player's state and interactions with deck, hand, and battlefield """
+
 from typing import TYPE_CHECKING
 
 from cards.card_base import Card

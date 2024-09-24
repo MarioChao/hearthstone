@@ -1,3 +1,5 @@
+"""Defines the program's starting logic"""
+
 import game_controller
 from aesthetics import horizontal_rule, input_to_continue
 from game_loop import game_single_player, game_multiple_players_1v1

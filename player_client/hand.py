@@ -1,3 +1,5 @@
+"""Handles a player's drawn cards"""
+
 from cards.card_base import Card
 
 class Hand:

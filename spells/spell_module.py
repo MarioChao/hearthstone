@@ -1,3 +1,5 @@
+"""Contains the class for spells"""
+
 from typing import TYPE_CHECKING
 
 from target.query_target import TargetsType, QueryTarget

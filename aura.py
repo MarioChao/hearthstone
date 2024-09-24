@@ -1,3 +1,5 @@
+"""Manages auras / ongoing effects during game"""
+
 from character.character_class import Character
 from character.character_effect_types import CharacterEffectType
 from character.character_effects import CharacterAbility

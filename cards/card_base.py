@@ -1,3 +1,5 @@
+"""Contains the base class for player cards"""
+
 class Card:
 	def __init__(self, name: str, mana_cost: int, description: str):
 		self.name = name

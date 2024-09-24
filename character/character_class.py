@@ -1,3 +1,5 @@
+"""Contains the character class which represents heroes and minions on the battlefield"""
+
 import typing
 from copy import deepcopy
 from typing import TYPE_CHECKING

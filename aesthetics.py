@@ -1,3 +1,5 @@
+"""Contains functions for user experience"""
+
 def horizontal_rule(length=20):
 	print("-" * length)
 

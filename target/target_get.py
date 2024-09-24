@@ -1,3 +1,5 @@
+"""Contains functions for selecting characters based on criteria"""
+
 import random
 from typing import TYPE_CHECKING
 

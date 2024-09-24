@@ -1,3 +1,5 @@
+"""Contains the class that represents character effects / abilities"""
+
 from typing import TYPE_CHECKING
 
 from character.character_effect_types import CharacterEffectType

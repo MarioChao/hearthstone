@@ -1,3 +1,5 @@
+"""Contains the class for running the game"""
+
 import random
 
 from aesthetics import horizontal_rule

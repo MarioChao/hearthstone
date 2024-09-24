@@ -1,3 +1,5 @@
+"""Defines the enum type for character effects"""
+
 from enum import Enum
 
 # Enums

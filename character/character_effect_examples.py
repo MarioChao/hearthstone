@@ -1,3 +1,5 @@
+"""Contains common character effects (e.g. taunt, charge)"""
+
 from character.character_effects import CharacterAbility
 from character.character_effect_types import CharacterEffectType
 from effects.effect_functions import create_dummy_effect, create_character_special_effect, create_combined_effects, \

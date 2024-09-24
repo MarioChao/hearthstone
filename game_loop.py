@@ -1,3 +1,5 @@
+"""Defines the gameplay loop"""
+
 from copy import deepcopy
 
 import game_controller
@@ -119,11 +121,12 @@ def game_multiple_players_1v1():
 	print("Welcome to Multiple Players 1v1!")
 	print()
 	print("First, tell us the number of players! (>= 2)")
+	print("# of players:")
 
 	# Input player count
 	while True:
 		try:
-			player_count = int(input("# of players: "))
+			player_count = int(input("> "))
 			assert player_count >= 2
 			break
 		except Exception:

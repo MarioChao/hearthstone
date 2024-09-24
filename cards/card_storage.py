@@ -1,3 +1,5 @@
+"""Defines all cards (minion, spell)"""
+
 from cards.card_minion import MinionCard
 from cards.card_spell import SpellCard
 from character.character_effect_examples import create_taunt_ability, create_charge_ability, create_stealth_ability

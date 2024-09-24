@@ -1,3 +1,5 @@
+"""Contains input functions for game objects"""
+
 from typing import TYPE_CHECKING
 
 from character.character_class import CharacterType

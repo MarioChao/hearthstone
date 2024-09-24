@@ -1,3 +1,5 @@
+"""Contains the class for minion cards"""
+
 from typing import TYPE_CHECKING
 
 from cards.card_base import Card

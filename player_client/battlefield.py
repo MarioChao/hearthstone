@@ -1,3 +1,5 @@
+"""Handles a player's summoned minions"""
+
 from typing import TYPE_CHECKING
 
 from character.character_class import Character, CharacterType

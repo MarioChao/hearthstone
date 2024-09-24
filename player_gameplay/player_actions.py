@@ -1,3 +1,5 @@
+"""Handles action inputs during a player's turn"""
+
 from aesthetics import horizontal_rule
 from cards.card_minion import MinionCard
 from cards.card_spell import SpellCard
